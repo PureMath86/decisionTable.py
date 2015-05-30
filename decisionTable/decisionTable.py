@@ -1,13 +1,13 @@
 # -*- coding: utf-8 -*-
 class DecisionTable:
-    def __init__(self,data=None,wildcardSymbol='*',parentSymbol='.'):
+    def __init__(self,data,wildcardSymbol='*',parentSymbol='.'):
         
         self.header = [] 
         self.decisions = []
         
         self.__wildcardSymbol = wildcardSymbol
         self.__parentSymbol = parentSymbol
-         
+        
         self.__parseStringData(data)
         self.__replaceSpecialValues()
         
@@ -93,7 +93,7 @@ class DecisionTable:
         raise ValueError('Decision in table is not found')
 
     def decisionCall(self,callback,result,**values):
-        callback(self.__getDecision(result,**values))
+        callback(**self.__getDecision(result,**values))
     
     def decision(self,result,**values):
         data = self.__getDecision(result,**values)
