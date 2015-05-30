@@ -1,6 +1,3 @@
-.. image:: https://badge.waffle.io/urosjarc/decisionTable.png?label=ready&title=Ready 
- :target: https://waffle.io/urosjarc/decisionTable
- :alt: 'Stories in Ready'
 ===============================
 Decision table
 ===============================
