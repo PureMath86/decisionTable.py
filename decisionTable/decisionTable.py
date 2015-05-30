@@ -1,6 +1,5 @@
 # -*- coding: utf-8 -*-
 from __future__ import absolute_import
-from __future__ import generators
 
 from . import view
 
@@ -155,7 +154,7 @@ class DecisionTable:
 
         #Return none if not found (not string so
         #not found value can be recognized
-        return {key:None for key in result}
+        return dict((key,None) for (key,value) in result)
 
     def decisionCall(self,callback,result,**values):
         callback(**self.__getDecision(result,**values))
