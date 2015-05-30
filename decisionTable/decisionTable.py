@@ -4,43 +4,33 @@ from __future__ import absolute_import
 from . import view
 
 class DecisionTable:
-    def __init__(self,data,wildcardSym='*',parentSym='.'):
+    def __init__(self,data,wildcardSymbol='*',parentSymbol='.'):
         
         self.header = [] 
         self.decisions = []
         
-        self.wildcardSymbol = wildcardSym
-        self.parentSymbol = parentSym
+        self.__setWildcardSymbol(wildcardSymbol)
+        self.__setParentSymbol(parentSymbol)
         
         self.__parseStringData(data)
         self.__replaceSpecialValues()
     
-    @property
-    def wildcardSymbol(self):
-        return self.wildcardSymbol
-
-    @property
-    def parentSymbol(self):
-        return self.parentSymbol
-
-    @wildcardSymbol.setter
-    def wildcardSymbol(self,value):
+    def __setWildcardSymbol(self,value):
         errors = []
         if not value is str and not value.split():
             errors.append('wildcardSymbol_ERROR : Symbol : must be char or string!')
         else:
-            self.wildcardSymbol = value
+            self.__wildcardSymbol = value
         
         if errors:
             view.Tli.showErrors('SymbolError', errors)
-    
-    @parentSymbol.setter
-    def parentSymbol(self,value):
+            
+    def __setParentSymbol(self,value):
         errors = []
         if not value is str and not value.split():
             errors.append('parentSymbol_ERROR : Symbol : must be char or string!')
         else:
-            self.parentSymbol = value
+            self.__parentSymbol = value
         
         if errors:
             view.Tli.showErrors('SymbolError', errors)
@@ -76,6 +66,7 @@ class DecisionTable:
         if error:
             view.Tli.showErrors(error)
             
+    
     def __replaceSpecialValues(self):
         error = []
         for row, line in enumerate(self.decisions):
@@ -83,7 +74,7 @@ class DecisionTable:
                 for i, element in enumerate(line):
                     if row == 0:
                         error.append("Row: {}colume: {}==> don't have parent value".format(str(row).ljust(4),str(i).ljust(4)))
-                    if element==self.parentSymbol:
+                    if element==self.__parentSymbol:
                         if self.decisions[row-1][i] == '.':
                             error.append("Row: {}Colume: {}==> don't have parent value".format(str(row).ljust(4),str(i).ljust(4)))
                         
@@ -141,7 +132,7 @@ class DecisionTable:
 
             for valueKey in __valueKeyWithHeaderIndex:
                 if line[__valueKeyWithHeaderIndex[valueKey]] != valueKey:
-                    if line[__valueKeyWithHeaderIndex[valueKey]] != self.wildcardSymbol:
+                    if line[__valueKeyWithHeaderIndex[valueKey]] != self.__wildcardSymbol:
                         match = False
                         break
             

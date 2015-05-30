@@ -38,7 +38,7 @@ class normal(unittest.TestCase):
         *                *               *             *             ERROR               ERROR
         
             """)
-     
+
     def test_instance_variable__header(self):
         
         headerList = [
@@ -189,8 +189,7 @@ class catchedErrors(unittest.TestCase):
     def setUp(self):
         self.instance = decisionTable.DecisionTable("test")
     
-    def test_instance_method_checkSymbol(self):
-
+    def test_instance_variable_wildcardSymbol(self):
         notCatch = False
 
         try:
@@ -198,13 +197,19 @@ class catchedErrors(unittest.TestCase):
             notCatch = True
         except: None
 
+        if notCatch:
+            raise ValueError('Not catch error: wildcardSymbol errors')
+        
+    def test_instance_variable_parentSymbol(self):
+        notCatch = False
+
         try:
             decisionTable.DecisionTable("test",parentSymbol='')
             notCatch = True
         except: None 
 
         if notCatch:
-            raise ValueError('Not catch error: wildcard/parent Symbol errors')
+            raise ValueError('Not catch error: parentSymbol errors')
 
     def test_instance_method_parseStringData(self):
         notCatch = False
