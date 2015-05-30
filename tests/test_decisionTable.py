@@ -11,7 +11,6 @@ Tests for `decisionTable` module.
 import unittest
 import decisionTable
 
-
 class normal(unittest.TestCase):
 
     def setUp(self):
@@ -285,5 +284,6 @@ class catchedErrors(unittest.TestCase):
          
     def tearDown(self):
         pass    
+    
 if __name__ == '__main__':
     unittest.main()
