@@ -154,7 +154,7 @@ class DecisionTable:
 
         #Return none if not found (not string so
         #not found value can be recognized
-        return {key,None for key in result}
+        return {key:None for key in result}
 
     def decisionCall(self,callback,result,**values):
         callback(**self.__getDecision(result,**values))
