@@ -50,11 +50,11 @@ class normal(unittest.TestCase):
             'new_configState'
         ]
 
-        self.assertIsNotNone(self.instance.header)
+        self.assertTrue(self.instance.header)
         self.assertEqual(self.instance.header,headerList)
             
     def test_instance_variable__decisions(self):
-        self.assertIsNotNone(self.instance.decisions)
+        self.assertTrue(self.instance.decisions)
         self.assertEqual(self.instance.decisions,
             [
                 ['None', 'None', 'False', 'install', 'install', 'install'],
@@ -99,7 +99,7 @@ class normal(unittest.TestCase):
             action = 'install'
         )
         
-        self.assertIsNotNone(result)
+        self.assertTrue(result)
         self.assertEqual(result,['install','install'])
     
     def test_instance_method__allDecision(self):
@@ -108,7 +108,7 @@ class normal(unittest.TestCase):
             packageState = 'error'
         )
         
-        self.assertIsNotNone(result)
+        self.assertTrue(result)
         self.assertEqual(result,
             [
                 ['purge','install','purge','ERROR'],
@@ -137,12 +137,11 @@ class no_decisions(unittest.TestCase):
             'new_configState'
         ]
 
-        self.assertIsNotNone(self.instance.header)
+        self.assertTrue(self.instance.header)
         self.assertEqual(self.instance.header,headerList)
             
     def test_instance_variable__decisions(self):
         
-        self.assertIsNotNone(self.instance.decisions)
         self.assertEqual(self.instance.decisions,[])        
     
     def test_instance_method__decisionCall(self):
@@ -169,7 +168,7 @@ class no_decisions(unittest.TestCase):
             config = True,
             action = 'purge'
         )
-        self.assertIsNotNone(result)
+        self.assertTrue(result)
         self.assertEqual(result,[None,None])
     
     def test_instance_method__allDecision(self):
@@ -178,7 +177,7 @@ class no_decisions(unittest.TestCase):
             packageState = 'error'
         )
         
-        self.assertIsNotNone(result)
+        self.assertTrue(result)
         self.assertEqual(result, [None,None])
         
     def tearDown(self):
