@@ -1,5 +1,6 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
+from __future__ import absolute_import
 
 """
 test_decisionTable
@@ -7,21 +8,18 @@ test_decisionTable
 
 Tests for `decisionTable` module.
 """
-
 import unittest
-
 import decisionTable
 
 
-class TestDecisionTable(unittest.TestCase):
+class normal(unittest.TestCase):
 
-    #Overriden
     def setUp(self):
-        self.table = decisionTable.DecisionTable("""
+        self.instance = decisionTable.DecisionTable("""
 
         packageState     configState     config        action        new_packageState    new_configState
 
-        ================================================================================================
+        ================== ============================  ============================ ======================
         None             None            False         install       install             install            
         ok               ok              False         purge         purge               purge
 
@@ -41,22 +39,24 @@ class TestDecisionTable(unittest.TestCase):
         *                *               *             *             ERROR               ERROR
         
             """)
-
+     
+    def test_instance_variable__header(self):
         
-    def test_variable_header(self):
-        self.assertIsNotNone(self.table.header)
-        self.assertEqual(self.table.header,[
+        headerList = [
             'packageState',
             'configState',
             'config',
             'action',
             'new_packageState',
             'new_configState'
-        ])
-    
-    def test_variable_decisions(self):
-        self.assertIsNotNone(self.table.decisions)
-        self.assertEqual(self.table.decisions,
+        ]
+
+        self.assertIsNotNone(self.instance.header)
+        self.assertEqual(self.instance.header,headerList)
+            
+    def test_instance_variable__decisions(self):
+        self.assertIsNotNone(self.instance.decisions)
+        self.assertEqual(self.instance.decisions,
             [
                 ['None', 'None', 'False', 'install', 'install', 'install'],
                 ['ok', 'ok', 'False', 'purge', 'purge', 'purge'],
@@ -76,14 +76,14 @@ class TestDecisionTable(unittest.TestCase):
             ]
         )
     
-    def test_method_decisionCall(self):
+    def test_instance_method__decisionCall(self):
         this = self
         
-        def testCallback(new_packageState,new_configState):
+        def callback(new_packageState,new_configState):
             this.assertEqual(new_packageState,'ok')
             this.assertEqual(new_configState,'purge')
-        
-        self.table.decisionCall(testCallback,
+                    
+        self.instance.decisionCall(callback,
             ['new_packageState','new_configState'],
             packageState = 'ok',
             configState = 'error',
@@ -91,8 +91,8 @@ class TestDecisionTable(unittest.TestCase):
             action = 'purge'
         )
     
-    def test_method_decision(self):
-        result = self.table.decision(
+    def test_instance_method__decision(self):
+        result = self.instance.decision(
             ['new_packageState','new_configState'],
             packageState = 'error',
             configState = 'install',
@@ -103,8 +103,8 @@ class TestDecisionTable(unittest.TestCase):
         self.assertIsNotNone(result)
         self.assertEqual(result,['install','install'])
     
-    def test_method_allDecision(self):
-        result = self.table.allDecisions(
+    def test_instance_method__allDecision(self):
+        result = self.instance.allDecisions(
             ['new_packageState','new_configState'],
             packageState = 'error'
         )
@@ -118,8 +118,172 @@ class TestDecisionTable(unittest.TestCase):
         )
         
     #Overriden
+    
     def tearDown(self):
         pass
 
+class no_decisions(unittest.TestCase):
+
+    def setUp(self):  
+        self.instance = decisionTable.DecisionTable(""" packageState     configState     config        action        new_packageState    new_configState """)
+     
+    def test_instance_variable__header(self):
+        
+        headerList = [
+            'packageState',
+            'configState',
+            'config',
+            'action',
+            'new_packageState',
+            'new_configState'
+        ]
+
+        self.assertIsNotNone(self.instance.header)
+        self.assertEqual(self.instance.header,headerList)
+            
+    def test_instance_variable__decisions(self):
+        
+        self.assertIsNotNone(self.instance.decisions)
+        self.assertEqual(self.instance.decisions,[])        
+    
+    def test_instance_method__decisionCall(self):
+        this = self
+        
+        def callback(new_packageState,new_configState):
+            this.assertEqual(new_packageState,None)
+            this.assertEqual(new_configState,None)
+
+        self.instance.decisionCall(callback,
+            ['new_packageState','new_configState'],
+            packageState = 'ok',
+            configState = 'error',
+            config = True,
+            action = 'purge'
+        )
+    
+    def test_instance_method__decision(self):
+        
+        result = self.instance.decision(
+            ['new_packageState','new_configState'],
+            packageState = 'ok',
+            configState = 'error',
+            config = True,
+            action = 'purge'
+        )
+        self.assertIsNotNone(result)
+        self.assertEqual(result,[None,None])
+    
+    def test_instance_method__allDecision(self):
+        result = self.instance.allDecisions(
+            ['new_packageState','new_configState'],
+            packageState = 'error'
+        )
+        
+        self.assertIsNotNone(result)
+        self.assertEqual(result, [None,None])
+        
+    def tearDown(self):
+        pass
+
+class catchedErrors(unittest.TestCase):
+
+    def setUp(self):
+        self.instance = decisionTable.DecisionTable("test")
+    
+    def test_instance_method_checkSymbol(self):
+
+        notCatch = False
+
+        try:
+            decisionTable.DecisionTable("test",wildcardSymbol='')
+            notCatch = True
+        except: None
+
+        try:
+            decisionTable.DecisionTable("test",parentSymbol='')
+            notCatch = True
+        except: None 
+
+        if notCatch:
+            raise ValueError('Not catch error: wildcard/parent Symbol errors')
+
+    def test_instance_method_parseStringData(self):
+        notCatch = False
+        
+        try:
+            decisionTable.DecisionTable("")
+            notCatch = True
+            msg = 'data variable is empty!'
+        except: None    
+            
+        try:
+            decisionTable.DecisionTable("test test")
+            notCatch = True
+            msg = 'is not unique header element!'
+        except: None
+
+        try:
+            decisionTable.DecisionTable("""
+            test test1
+            ======
+            test 
+            test test
+            """)
+            notCatch = True
+            msg = 'missing data in decisions'
+        except: None
+
+        try:
+            decisionTable.DecisionTable("""
+            test test1
+            ======
+            . test
+            test test
+            """)
+            notCatch = True
+            msg = 'missing parent data at first row'
+        except: None
+
+        if notCatch:
+            raise ValueError('Not catching errors: '+msg)
+    
+    def test_instance_method_checkDecisionParameters(self):
+        notCatch = False
+        
+        try:
+            self.instance.decision([],test = 'None')
+            notCatch = True
+            msg = 'result should contain one or more string elements'
+        except: None
+
+        try:
+            self.instance.decision(['test'])
+            notCatch = True
+            msg = 'values variable should contain one or more elements'
+        except: None
+
+        try:
+            self.instance.decision(['not_test'],test='None')
+            notCatch = True
+            msg = 'result is not in header'
+        except: None
+
+        try:
+            self.instance.decision(['test'],not_test='None')
+            notCatch = True
+            msg = 'variable name not in header'
+        except: None
+
+        try:
+            self.instance.decision(['test'],test='')
+            notCatch = True
+            msg = 'variable in values is empty'
+        except: None
+
+        if notCatch:
+            raise ValueError('Not catching errors: '+msg)
+         
+    def tearDown(self):
+        pass    
 if __name__ == '__main__':
     unittest.main()
