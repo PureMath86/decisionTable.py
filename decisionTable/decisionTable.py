@@ -3,7 +3,7 @@ from __future__ import absolute_import
 
 from . import view
 
-class DecisionTable:
+class DecisionTable(object):
     def __init__(self,data,wildcardSymbol='*',parentSymbol='.'):
         
         self.header = [] 
@@ -139,7 +139,7 @@ class DecisionTable:
             if match:
                 if multiple:
                     for header in result:
-                        if not header in machingData:
+                        if header not in machingData:
                             machingData[header] = [line[self.header.index(header)]]
                         else:
                             machingData[header].append(line[self.header.index(header)])
