@@ -2,6 +2,9 @@
 decisionTable
 ===============================
 
+**Python package to transform decision table string to code logic.**
+
+--------
 .. image:: https://img.shields.io/travis/urosjarc/decisionTable.svg
         :target: https://travis-ci.org/urosjarc/decisionTable
 
@@ -16,10 +19,10 @@ decisionTable
 
 .. image:: https://badge.waffle.io/urosjarc/decisionTable.png?label=ready&title=Ready 
  		:target: https://waffle.io/urosjarc/decisionTable
- 	
 --------
 
-***Python package to transform decision table string to code logic.***
+Info
+----
 
 * Free software: BSD license
 * Documentation: https://decisionTable.readthedocs.org.
