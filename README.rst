@@ -21,6 +21,9 @@ decisionTable
 .. image:: https://badge.waffle.io/urosjarc/decisionTable.png?label=ready&title=Ready 
  		:target: https://waffle.io/urosjarc/decisionTable
 
+.. image:: https://crate.io/packages/decisionTable
+		:rarget: https://crate.io/packages/decisionTable
+		
 * Free software: BSD license
 * Documentation: https://decisionTable.readthedocs.org.
 
