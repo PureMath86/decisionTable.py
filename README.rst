@@ -4,7 +4,6 @@ decisionTable
 
 **Python package to transform decision table string to code logic.**
 
-Info
 ----
 
 .. image:: https://img.shields.io/travis/urosjarc/decisionTable.svg
