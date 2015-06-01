@@ -21,6 +21,9 @@ decisionTable
 .. image:: https://badge.waffle.io/urosjarc/decisionTable.png?label=ready&title=Ready 
  		:target: https://waffle.io/urosjarc/decisionTable
 
+.. image:: https://readthedocs.org/projects/decisiontable/badge/
+ 		:target: https://readthedocs.org/projects/decisiontable
+
 .. image:: https://crate.io/packages/decisionTable
 		:rarget: https://crate.io/packages/decisionTable
 		
