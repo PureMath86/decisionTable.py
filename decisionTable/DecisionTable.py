@@ -10,19 +10,21 @@ fragmented first!
 from __future__ import absolute_import
 
 from . import view
+import decisionTable
 
 class DecisionTable(object):
     """
-    Args:
-        header (array of str): header strings from tableString.
-        decisions (array of (array of str)): Decisions rows from tableString.
-        __wildcardSymbol (str)
-        __parentSymbol (str)
 
     Attributes:
         tableString (str): Main table representer of headers and decisions.
         wildcardSymbol (str,optional): Is any value on decision table.
         parentSymbol (str,optional): Is parent value (one level up on decision table).
+        
+    Args:
+        header (array of str): header strings from tableString.
+        decisions (array of (array of str)): Decisions rows from tableString.
+        __wildcardSymbol (str)
+        __parentSymbol (str)
     """
     
     def __init__(self,tableString,wildcardSymbol='*',parentSymbol='.'):
