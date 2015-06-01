@@ -9,7 +9,7 @@ fragmented first!
 
 from __future__ import absolute_import
 
-from . import view
+from . import _view as view
 
 class DecisionTable(object):
     """

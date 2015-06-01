@@ -45,7 +45,7 @@ extensions = ['sphinx.ext.autodoc', 'sphinx.ext.viewcode', 'sphinx.ext.napoleon'
 # Napoleon settings
 napoleon_google_docstring = True 
 napoleon_numpy_docstring = False
-napoleon_include_private_with_doc = True
+napoleon_include_private_with_doc = False
 napoleon_include_special_with_doc = True
 napoleon_use_admonition_for_examples = False
 napoleon_use_admonition_for_notes = False
@@ -67,8 +67,8 @@ source_suffix = '.rst'
 master_doc = 'index'
 
 # General information about the project.
-project = u'Decision table'
-copyright = u'2015, Uros Jarc'
+project = u'decisionTable'
+copyright = u'2015, '+decisionTable.__author__
 
 # The version info for the project you're documenting, acts as replacement
 # for |version| and |release|, also used in various other places throughout
@@ -221,8 +221,8 @@ latex_elements = {
 # [howto/manual]).
 latex_documents = [
     ('index', 'decisionTable.tex',
-     u'Decision table Documentation',
-     u'Uros Jarc', 'manual'),
+     u'decisionTable Documentation',
+     decisionTable.__author__, 'manual'),
 ]
 
 # The name of an image file (relative to this directory) to place at
@@ -252,8 +252,8 @@ latex_documents = [
 # (source start file, name, description, authors, manual section).
 man_pages = [
     ('index', 'decisionTable',
-     u'Decision table Documentation',
-     [u'Uros Jarc'], 1)
+     u'decisionTable Documentation',
+     [decisionTable.__author__], 1)
 ]
 
 # If true, show URL addresses after external links.
@@ -267,11 +267,11 @@ man_pages = [
 #  dir menu entry, description, category)
 texinfo_documents = [
     ('index', 'decisionTable',
-     u'Decision table Documentation',
-     u'Uros Jarc',
+     u'decisionTable Documentation',
+     decisionTable.__author__,
      'decisionTable',
-     'One line description of project.',
-     'Miscellaneous'),
+     decisionTable.__description__,
+     'Code logic'),
 ]
 
 # Documents to append as an appendix to all manuals.

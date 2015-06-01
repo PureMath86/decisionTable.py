@@ -1,5 +1,5 @@
 ===============================
-Decision table
+decisionTable
 ===============================
 
 .. image:: https://img.shields.io/travis/urosjarc/decisionTable.svg
@@ -17,7 +17,7 @@ Decision table
 .. image:: https://badge.waffle.io/urosjarc/decisionTable.png?label=ready&title=Ready 
  		:target: https://waffle.io/urosjarc/decisionTable
  	
-Write decision table and get data base on you decision
+Transform decision table string to code logic.
 
 * Free software: BSD license
 * Documentation: https://decisionTable.readthedocs.org.
@@ -25,4 +25,5 @@ Write decision table and get data base on you decision
 Features
 --------
 
-* TODO
+- Decision table string parser.
+- Get decision from table.
