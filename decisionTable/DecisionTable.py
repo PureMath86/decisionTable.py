@@ -13,28 +13,16 @@ from . import view
 
 class DecisionTable(object):
     """
-    :param tableString: Main table representer of headers and decisions.
-    :vartype tableString: string
-    
-    :param wildcardSymbol: Is any value on decision table.
-    :vartype wildcardSymbol: string
+    Arguments:
+        header (array of str): header strings from tableString.
+        decisions (array of str): Decisions rows from tableString.
+        __wildcardSymbol (str): Represent any value in decisions.
+        __parentSymbol (str): Represent parent value in decisions.
 
-    :param parentSymbol: Is parent value (one level up on decision table).
-    :vartype parentSymbol: string
-
-    
-    :ivar header: header strings from tableString.
-    :vartype header: array 
-
-    :ivar decisions: decisions rows from tableString.
-    :vartype decisions: array
-
-    :ivar __wildcardSymbol: represent any value in decisions
-    :vartype __wildcardSymbol: string
-
-    :ivar __parentSymbol: represent parent value in decisions.
-    :vartype __parentSymbol: string
-        
+    Attributes:
+        tableString (str): Main table representer of headers and decisions.
+        wildcardSymbol (str,optional): Is any value on decision table.
+        parentSymbol (str,optional): Is parent value (one level up on decision table).
     """
     
     def __init__(self,tableString,wildcardSymbol='*',parentSymbol='.'):
