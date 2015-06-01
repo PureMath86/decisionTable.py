@@ -1,6 +1,6 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
-
+import decisionTable
 
 try:
     from setuptools import setup
@@ -24,11 +24,11 @@ test_requirements = [
 
 setup(
     name='decisionTable',
-    version='0.0.1',
-    description="Write decision table and get data base on you decision",
+    version=decisionTable.__version__,
+    description=decisionTable.__description__,
     long_description=readme + '\n\n' + history,
-    author="Uros Jarc",
-    author_email='jar.fmf@gmail.com',
+    author=decisionTable.__author__,
+    author_email=decisionTable.__email__,
     url='https://github.com/urosjarc/decisionTable',
     packages=[
         'decisionTable',

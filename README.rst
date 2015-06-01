@@ -1,6 +1,10 @@
 ===============================
-Decision table
+decisionTable
 ===============================
+
+**Python package to transform decision table string to code logic.**
+
+----
 
 .. image:: https://img.shields.io/travis/urosjarc/decisionTable.svg
         :target: https://travis-ci.org/urosjarc/decisionTable
@@ -16,8 +20,6 @@ Decision table
 
 .. image:: https://badge.waffle.io/urosjarc/decisionTable.png?label=ready&title=Ready 
  		:target: https://waffle.io/urosjarc/decisionTable
- 	
-Write decision table and get data base on you decision
 
 * Free software: BSD license
 * Documentation: https://decisionTable.readthedocs.org.
@@ -25,4 +27,5 @@ Write decision table and get data base on you decision
 Features
 --------
 
-* TODO
+- Decision table string parser.
+- Get decision from table.

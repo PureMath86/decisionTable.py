@@ -3,10 +3,10 @@
 from __future__ import absolute_import
 
 """
-test_decisionTable
+test_DecisionTable
 ----------------------------------
 
-Tests for `decisionTable` module.
+Tests for `DecisionTable` module.
 """
 import unittest
 import decisionTable

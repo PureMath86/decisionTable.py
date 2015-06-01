@@ -5,7 +5,7 @@ Credits
 Development Lead
 ----------------
 
-* Uros Jarc <jar.fmf@gmail.com>
+* Uroš Jarc <jar.fmf@gmail.com>
 
 Contributors
 ------------
