@@ -13,11 +13,11 @@ from . import view
 
 class DecisionTable(object):
     """
-    Arguments:
+    Args:
         header (array of str): header strings from tableString.
-        decisions (array of str): Decisions rows from tableString.
-        __wildcardSymbol (str): Represent any value in decisions.
-        __parentSymbol (str): Represent parent value in decisions.
+        decisions (array of (array of str)): Decisions rows from tableString.
+        __wildcardSymbol (str)
+        __parentSymbol (str)
 
     Attributes:
         tableString (str): Main table representer of headers and decisions.
@@ -36,10 +36,10 @@ class DecisionTable(object):
         self.__setParentSymbol(parentSymbol)
         
         self.header, self.decisions = self.__tableStringParser(tableString)
-        self.__replaceSpecialValues()
+        self.decisions = self.__replaceSpecialValues(self.decisions)
     
     def __setWildcardSymbol(self,value):
-        """__wildcardSymbol variable setter"""
+        """self.__wildcardSymbol variable setter"""
         
         errors = []
         if not value is str and not value.split():
@@ -51,7 +51,7 @@ class DecisionTable(object):
             view.Tli.showErrors('SymbolError', errors)
             
     def __setParentSymbol(self,value):
-        """__parentSymbol variable setter"""
+        """self.__parentSymbol variable setter"""
         
         errors = []
         if not value is str and not value.split():
@@ -62,23 +62,30 @@ class DecisionTable(object):
         if errors:
             view.Tli.showErrors('SymbolError', errors)
             
-    def __tableStringParser(self,data):
+    def __tableStringParser(self,tableString):
         """
-        Will parse and check data string parameter
+        Will parse and check tableString parameter for any invalid strings.
         
-        RAISE ERROR :
-            - data parameter is empty.
-            - One of the header element is not unique.
-            - Missing data in row array.
+        Args:
+            tableString (str): Standard table string with header and decisions.
         
-        RETURN :
+        Raises:
+            ValueError: tableString is empty.
+            ValueError: One of the header element is not unique.
+            ValueError: Missing data value.
+            ValueError: Missing parent data.
+
+        Returns: 
+            Array of header and decisions.
+            
+            >>> print(return)
             [
-                ['headerString1', ... , 'headerStringN'],
+                ['headerVar1', ... ,'headerVarN'],
                 [
-                    ['value1', ... , 'value2'],
-                    [<row values>],
+                    ['decisionValue1', ... ,'decisionValueN'],
+                    [<row2 strings>],
                     ...
-                    [<row n values>]
+                    [<rowN strings>]
                 ]
             ]
         """
@@ -87,12 +94,12 @@ class DecisionTable(object):
         header = []
         decisions = []
 
-        if not data.split():
-            error.append('Data variable is empty!')
+        if not tableString.split():
+            error.append('Table variable is empty!')
         
-        data = data.split('\n')
+        tableString = tableString.split('\n')
         newData = []
-        for element in data:
+        for element in tableString:
             if element.strip():
                 newData.append(element)
         
@@ -102,8 +109,8 @@ class DecisionTable(object):
             else:
                 error.append('Header element: '+element+' is not unique!')
 
-        for i, data in enumerate(newData[2:]):
-            split = data.split()
+        for i, tableString in enumerate(newData[2:]):
+            split = tableString.split()
             if len(split) == len(header):
                 decisions.append(split)
             else:
@@ -117,36 +124,91 @@ class DecisionTable(object):
         else:
             return [header,decisions]
             
-    def __replaceSpecialValues(self):
+    def __replaceSpecialValues(self,decisions):
+        """
+        Will replace special values in decisions array.
+        
+        Args:
+            decisions (array of array of str): Standard decision array format.
+
+        Raises:
+            ValueError: Row element don't have parent value.
+            
+        Returns: 
+            New decision array with updated values.
+        """
         error = []
-        for row, line in enumerate(self.decisions):
+        for row, line in enumerate(decisions):
             if '.' in line:
                 for i, element in enumerate(line):
                     if row == 0:
                         error.append("Row: {}colume: {}==> don't have parent value".format(str(row).ljust(4),str(i).ljust(4)))
                     if element==self.__parentSymbol:
-                        if self.decisions[row-1][i] == '.':
+                        if decisions[row-1][i] == '.':
                             error.append("Row: {}Colume: {}==> don't have parent value".format(str(row).ljust(4),str(i).ljust(4)))
                         
-                        self.decisions[row][i]=self.decisions[row-1][i]
+                        decisions[row][i]=decisions[row-1][i]
         
         if error:
             view.Tli.showErrors(error)
+        else:
+            return decisions
 
     def __toString(self,values):
+        """
+        Will replace dict values with string values
+        
+        Args:
+            values (dict): Dictionary of values
+        
+        Returns:
+            Updated values dict
+        """
         for key in values:
             if not values[key] is str:
                 values[key] = str(values[key])
         return values
     
     def __valueKeyWithHeaderIndex(self,values):
+        """
+        This is hellper function, so that we can mach decision values with row index
+        as represented in header index.
+        
+        Args:
+            values (dict): Normaly this will have dict of header values and values from decision
+        
+        Return:
+            >>> return()
+            {
+                values[headerName] : int(headerName index in header array),
+                ...
+            }
+
+        """
         machingIndexes = {}
         for index, name in enumerate(self.header):
             if name in values:
                 machingIndexes[values[name]] = index
         return machingIndexes
     
-    def __checkDecisionParameters(self,result,multiple=False,**values):
+    def __checkDecisionParameters(self,result,**values):
+        """
+        Checker of decision parameters, it will raise ValueError if finds something wrong.
+        
+        Args:
+            result (array of str): See public decision methods
+            **values (array of str): See public decision methods
+        
+        Raise:
+            ValueError: Result array none.
+            ValueError: Values dict none.
+            ValueError: Not find result key in header.
+            ValueError: Result value is empty.
+        
+        Returns:
+            Error array values
+            
+        """
         error = []
         
         if not result:
@@ -169,11 +231,21 @@ class DecisionTable(object):
             return error
                 
     def __getDecision(self,result,multiple=False,**values):
+        """
+        The main method for decision picking.
+        
+        Args:
+            result (array of str): What values you want to get in return array.
+            multiple (bolean, optional): Do you want multiple result if it finds many maching decisions.
+            **values (dict): What should finder look for, (headerString : value).
+        
+        Returns: Maped result values with finded elements in row/row.
+        """
         
         values = self.__toString(values)
         __valueKeyWithHeaderIndex = self.__valueKeyWithHeaderIndex(values)
         
-        errors = self.__checkDecisionParameters(result,multiple,**values)
+        errors = self.__checkDecisionParameters(result,**values)
         if errors:
             view.Tli.showErrors('Parameters error', errors)
 
@@ -209,9 +281,56 @@ class DecisionTable(object):
         return dict((key, None) for key in result)
 
     def decisionCall(self,callback,result,**values):
+        """
+        The decision method with callback option. This method will find matching row, construct
+        a dictionary and call callback with dictionary.
+
+        Args:
+            callback (function): Callback function will be called when decision will be finded.
+            result (array of str): Array of header string
+            **values (dict): What should finder look for, (headerString : value).
+
+        Example:
+            >>> def call(header1,header2):
+            >>>     print(header1,header2)
+            >>>
+            >>> table = DecisionTable('''
+            >>>     header1 header2
+            >>>     ===============
+            >>>     value1 value2
+            >>> ''')
+            >>>
+            >>> table.decisionCall(call,['header1','header2'],header1='value1',header2='value2')
+            (value1 value2)
+        """
         callback(**self.__getDecision(result,**values))
     
     def decision(self,result,**values):
+        """
+        The decision method with callback option. This method will find matching row, construct
+        a dictionary and call callback with dictionary.
+                
+        Args:
+            callback (function): Callback function will be called when decision will be finded.
+            result (array of str): Array of header string
+            **values (dict): What should finder look for, (headerString : value).
+        
+        Returns:
+            Arrays of finded values strings
+
+
+        Example:
+            >>> table = DecisionTable('''
+            >>>     header1 header2
+            >>>     ===============
+            >>>     value1 value2
+            >>> ''')
+            >>>
+            >>> header1, header2 = table.decision(['header1','header2'],header1='value1',header2='value2')
+            >>> print(header1,header2)
+            (value1 value2)
+
+        """
         data = self.__getDecision(result,**values)
         data = [ data[value] for value in result]
         if len(data) == 1:
@@ -220,6 +339,13 @@ class DecisionTable(object):
             return data
     
     def allDecisions(self,result,**values):
+        """
+        Joust like self.decision but for multiple finded values.
+        
+        Returns:
+            Arrays of arrays of finded elements or if finds only one mach, array of strings.
+
+        """
         data = self.__getDecision(result,multiple=True,**values)
         data = [ data[value] for value in result]
         if len(data) == 1:
