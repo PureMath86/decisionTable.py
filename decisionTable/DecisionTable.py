@@ -1,21 +1,58 @@
-# -*- coding: utf-8 -*-
+"""
+decisionTable.DecisionTable
+---------------------------
+
+Main package class with all the logic.
+If main package will need additional code, this class should get
+fragmented first!
+"""
+
 from __future__ import absolute_import
 
 from . import view
 
 class DecisionTable(object):
-    def __init__(self,data,wildcardSymbol='*',parentSymbol='.'):
+    """
+    :param tableString: Main table representer of headers and decisions.
+    :vartype tableString: string
+    
+    :param wildcardSymbol: Is any value on decision table.
+    :vartype wildcardSymbol: string
+
+    :param parentSymbol: Is parent value (one level up on decision table).
+    :vartype parentSymbol: string
+
+    
+    :ivar header: header strings from tableString.
+    :vartype header: array 
+
+    :ivar decisions: decisions rows from tableString.
+    :vartype decisions: array
+
+    :ivar __wildcardSymbol: represent any value in decisions
+    :vartype __wildcardSymbol: string
+
+    :ivar __parentSymbol: represent parent value in decisions.
+    :vartype __parentSymbol: string
+        
+    """
+    
+    def __init__(self,tableString,wildcardSymbol='*',parentSymbol='.'):
         
         self.header = [] 
         self.decisions = []
-        
+        self.__wildcardSymbol = None
+        self.__parentSymbol = None
+
         self.__setWildcardSymbol(wildcardSymbol)
         self.__setParentSymbol(parentSymbol)
         
-        self.__parseStringData(data)
+        self.header, self.decisions = self.__tableStringParser(tableString)
         self.__replaceSpecialValues()
     
     def __setWildcardSymbol(self,value):
+        """__wildcardSymbol variable setter"""
+        
         errors = []
         if not value is str and not value.split():
             errors.append('wildcardSymbol_ERROR : Symbol : must be char or string!')
@@ -26,6 +63,8 @@ class DecisionTable(object):
             view.Tli.showErrors('SymbolError', errors)
             
     def __setParentSymbol(self,value):
+        """__parentSymbol variable setter"""
+        
         errors = []
         if not value is str and not value.split():
             errors.append('parentSymbol_ERROR : Symbol : must be char or string!')
@@ -35,8 +74,30 @@ class DecisionTable(object):
         if errors:
             view.Tli.showErrors('SymbolError', errors)
             
-    def __parseStringData(self,data):
-        error = [] 
+    def __tableStringParser(self,data):
+        """
+        Will parse and check data string parameter
+        
+        RAISE ERROR :
+            - data parameter is empty.
+            - One of the header element is not unique.
+            - Missing data in row array.
+        
+        RETURN :
+            [
+                ['headerString1', ... , 'headerStringN'],
+                [
+                    ['value1', ... , 'value2'],
+                    [<row values>],
+                    ...
+                    [<row n values>]
+                ]
+            ]
+        """
+        
+        error = []
+        header = []
+        decisions = []
 
         if not data.split():
             error.append('Data variable is empty!')
@@ -48,25 +109,26 @@ class DecisionTable(object):
                 newData.append(element)
         
         for element in newData[0].split():
-            if not element in self.header:
-                self.header.append(element)
+            if not element in header:
+                header.append(element)
             else:
                 error.append('Header element: '+element+' is not unique!')
 
         for i, data in enumerate(newData[2:]):
             split = data.split()
-            if len(split) == len(self.header):
-                self.decisions.append(split)
+            if len(split) == len(header):
+                decisions.append(split)
             else:
                 error.append('Row: {}==> missing: {} data'.format(
                     str(i).ljust(4),
-                    str(len(self.header)-len(split)).ljust(2))
+                    str(len(header)-len(split)).ljust(2))
                 )
         
         if error:
             view.Tli.showErrors(error)
+        else:
+            return [header,decisions]
             
-    
     def __replaceSpecialValues(self):
         error = []
         for row, line in enumerate(self.decisions):
@@ -116,14 +178,16 @@ class DecisionTable(object):
                 error.append('Variable ('+header+') in values is empty string')
         
         if error:
-            view.Tli.showErrors(error)
+            return error
                 
     def __getDecision(self,result,multiple=False,**values):
         
         values = self.__toString(values)
         __valueKeyWithHeaderIndex = self.__valueKeyWithHeaderIndex(values)
         
-        self.__checkDecisionParameters(result,multiple,**values)
+        errors = self.__checkDecisionParameters(result,multiple,**values)
+        if errors:
+            view.Tli.showErrors('Parameters error', errors)
 
         machingData = {}
         for line in self.decisions:
