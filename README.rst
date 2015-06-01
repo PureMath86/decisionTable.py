@@ -17,7 +17,9 @@ decisionTable
 .. image:: https://badge.waffle.io/urosjarc/decisionTable.png?label=ready&title=Ready 
  		:target: https://waffle.io/urosjarc/decisionTable
  	
-Transform decision table string to code logic.
+--------
+
+***Python package to transform decision table string to code logic.***
 
 * Free software: BSD license
 * Documentation: https://decisionTable.readthedocs.org.
