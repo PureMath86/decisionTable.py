@@ -5,10 +5,15 @@ decisionTable.DecisionTable
 Main package class with all the logic.
 If main package will need additional code, this class should get
 fragmented first!
+
+To use main class:
+
+>>> from decisionTable import DecisionTable
+>>> table = DecisionTable(tableString)
 """
 from __future__ import absolute_import
 
-from . import _view as view
+from . import view
 
 class DecisionTable(object):
     """
@@ -21,8 +26,8 @@ class DecisionTable(object):
     Args:
         header (array of str): header strings from tableString.
         decisions (array of (array of str)): Decisions rows from tableString.
-        __wildcardSymbol (str)
-        __parentSymbol (str)
+        __wildcardSymbol (str) : Wild card symbol
+        __parentSymbol (str) : Parent symbol
     """
     
     def __init__(self,tableString,wildcardSymbol='*',parentSymbol='.'):
@@ -76,18 +81,18 @@ class DecisionTable(object):
             ValueError: Missing parent data.
 
         Returns: 
-            Array of header and decisions.
+            Array of header and decisions::
             
-            >>> print(return)
-            [
-                ['headerVar1', ... ,'headerVarN'],
+                print(return)
                 [
-                    ['decisionValue1', ... ,'decisionValueN'],
-                    [<row2 strings>],
-                    ...
-                    [<rowN strings>]
+                    ['headerVar1', ... ,'headerVarN'],
+                    [
+                        ['decisionValue1', ... ,'decisionValueN'],
+                        [<row2 strings>],
+                        ...
+                        [<rowN strings>]
+                    ]
                 ]
-            ]
         """
         
         error = []
@@ -300,7 +305,12 @@ class DecisionTable(object):
             >>>     value1 value2
             >>> ''')
             >>>
-            >>> table.decisionCall(call,['header1','header2'],header1='value1',header2='value2')
+            >>> header1, header2 = table.decision(
+            >>>     call,
+            >>>     ['header1','header2'],
+            >>>     header1='value1',
+            >>>     header2='value2'
+            >>> )
             (value1 value2)
         """
         callback(**self.__getDecision(result,**values))
@@ -326,7 +336,11 @@ class DecisionTable(object):
             >>>     value1 value2
             >>> ''')
             >>>
-            >>> header1, header2 = table.decision(['header1','header2'],header1='value1',header2='value2')
+            >>> header1, header2 = table.decision(
+            >>>     ['header1','header2'],
+            >>>     header1='value1',
+            >>>     header2='value2'
+            >>> )
             >>> print(header1,header2)
             (value1 value2)
 

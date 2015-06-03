@@ -1,5 +1,5 @@
 """
-decisionTable.__view
+decisionTable.view
 ------------
 View package for decisionTable.
 """

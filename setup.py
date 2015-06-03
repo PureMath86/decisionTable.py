@@ -32,9 +32,11 @@ setup(
     url='https://github.com/urosjarc/decisionTable',
     packages=[
         'decisionTable',
+        'decisionTable.view'
     ],
-    package_dir={'decisionTable':
-                 'decisionTable'},
+    package_dir={
+        'decisionTable': 'decisionTable'
+    },
     include_package_data=True,
     install_requires=requirements,
     license="BSD",
