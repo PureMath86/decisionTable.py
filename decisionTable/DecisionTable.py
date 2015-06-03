@@ -6,7 +6,6 @@ Main package class with all the logic.
 If main package will need additional code, this class should get
 fragmented first!
 """
-
 from __future__ import absolute_import
 
 from . import _view as view
@@ -95,33 +94,33 @@ class DecisionTable(object):
         header = []
         decisions = []
 
-        if not tableString.split():
+        if tableString.split() == []:
             error.append('Table variable is empty!')
-        
-        tableString = tableString.split('\n')
-        newData = []
-        for element in tableString:
-            if element.strip():
-                newData.append(element)
-        
-        for element in newData[0].split():
-            if not element in header:
-                header.append(element)
-            else:
-                error.append('Header element: '+element+' is not unique!')
-
-        for i, tableString in enumerate(newData[2:]):
-            split = tableString.split()
-            if len(split) == len(header):
-                decisions.append(split)
-            else:
-                error.append('Row: {}==> missing: {} data'.format(
-                    str(i).ljust(4),
-                    str(len(header)-len(split)).ljust(2))
-                )
+        else:
+            tableString = tableString.split('\n')
+            newData = []
+            for element in tableString:
+                if element.strip():
+                    newData.append(element)
+            
+            for element in newData[0].split():
+                if not element in header:
+                    header.append(element)
+                else:
+                    error.append('Header element: '+element+' is not unique!')
+    
+            for i, tableString in enumerate(newData[2:]):
+                split = tableString.split()
+                if len(split) == len(header):
+                    decisions.append(split)
+                else:
+                    error.append('Row: {}==> missing: {} data'.format(
+                        str(i).ljust(4),
+                        str(len(header)-len(split)).ljust(2))
+                    )
         
         if error:
-            view.Tli.showErrors(error)
+            view.Tli.showErrors('TableStringError',error)
         else:
             return [header,decisions]
             
@@ -151,7 +150,7 @@ class DecisionTable(object):
                         decisions[row][i]=decisions[row-1][i]
         
         if error:
-            view.Tli.showErrors(error)
+            view.Tli.showErrors('ReplaceSpecialValuesError',error)
         else:
             return decisions
 
@@ -248,7 +247,7 @@ class DecisionTable(object):
         
         errors = self.__checkDecisionParameters(result,**values)
         if errors:
-            view.Tli.showErrors('Parameters error', errors)
+            view.Tli.showErrors('ParametersError', errors)
 
         machingData = {}
         for line in self.decisions:

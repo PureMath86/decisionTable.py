@@ -16,4 +16,4 @@ class Tli(object):
         Raise:
             ValueError: Always
         """
-        raise ValueError(title+'\n'+('='*30)+'\n'+'\n > '.join(errors))
+        raise ValueError(title+'\n'+('='*30)+'\n > '+'\n > '.join(errors))
