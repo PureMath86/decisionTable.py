@@ -13,8 +13,8 @@ help:
 	@echo "release - package and upload a release"
 	@echo "dist - package"
 	@echo "install - install the package to the active Python's site-packages"
-	@echo "install-requirements - install development requirements"
-	@echo "uninstall-requirements - uninstall development requirements"
+	@echo "install-req - install development requirements"
+	@echo "uninstall-req - uninstall development requirements"
 
 clean: clean-build clean-pyc clean-test
 
@@ -74,8 +74,8 @@ dist: clean
 install: clean
 	python setup.py install
 
-install-requirements:
+install-req:
 	sudo pip install -r requirements.txt
 	
-uninstall-requirements:
+uninstall-req:
 	sudo pip uninstall -r requirements.txt
