@@ -13,6 +13,8 @@ help:
 	@echo "release - package and upload a release"
 	@echo "dist - package"
 	@echo "install - install the package to the active Python's site-packages"
+	@echo "install-requirements - install development requirements"
+	@echo "uninstall-requirements - uninstall development requirements"
 
 clean: clean-build clean-pyc clean-test
 
@@ -36,12 +38,14 @@ clean-test:
 
 lint:
 	flake8 decisionTable tests
+	pylint --rcfile=.pylintrc
 
 test:
 	python setup.py test
 	pylint --rcfile=.pylintrc --disable=all --enable=missing-docstring --reports=no decisionTable
 
 test-all:
+	$(MAKE) lint
 	tox
 
 coverage:
@@ -69,3 +73,9 @@ dist: clean
 
 install: clean
 	python setup.py install
+
+install-requirements:
+	sudo pip install -r requirements.txt
+	
+uninstall-requirements:
+	sudo pip uninstall -r requirements.txt
