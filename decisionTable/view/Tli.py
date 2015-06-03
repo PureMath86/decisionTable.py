@@ -1,8 +1,11 @@
 """
-Tli : Terminal line interface class
+Tli : Terminal line interface module
 """
 
 class Tli(object):
+    """
+    Main class module
+    """
     
     @staticmethod
     def showErrors(title,errors = []): 

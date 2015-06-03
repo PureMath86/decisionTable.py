@@ -39,6 +39,7 @@ lint:
 
 test:
 	python setup.py test
+	pylint --rcfile=.pylintrc --disable=all --enable=missing-docstring --reports=no decisionTable
 
 test-all:
 	tox
