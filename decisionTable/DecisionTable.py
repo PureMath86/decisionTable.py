@@ -5,11 +5,15 @@ decisionTable.DecisionTable
 Main package class with all the logic.
 If main package will need additional code, this class should get
 fragmented first!
-"""
 
+To use main class:
+
+>>> from decisionTable import DecisionTable
+>>> table = DecisionTable(tableString)
+"""
 from __future__ import absolute_import
 
-from . import _view as view
+from . import view
 
 class DecisionTable(object):
     """
@@ -22,8 +26,8 @@ class DecisionTable(object):
     Args:
         header (array of str): header strings from tableString.
         decisions (array of (array of str)): Decisions rows from tableString.
-        __wildcardSymbol (str)
-        __parentSymbol (str)
+        __wildcardSymbol (str) : Wild card symbol
+        __parentSymbol (str) : Parent symbol
     """
     
     def __init__(self,tableString,wildcardSymbol='*',parentSymbol='.'):
@@ -77,51 +81,51 @@ class DecisionTable(object):
             ValueError: Missing parent data.
 
         Returns: 
-            Array of header and decisions.
+            Array of header and decisions::
             
-            >>> print(return)
-            [
-                ['headerVar1', ... ,'headerVarN'],
+                print(return)
                 [
-                    ['decisionValue1', ... ,'decisionValueN'],
-                    [<row2 strings>],
-                    ...
-                    [<rowN strings>]
+                    ['headerVar1', ... ,'headerVarN'],
+                    [
+                        ['decisionValue1', ... ,'decisionValueN'],
+                        [<row2 strings>],
+                        ...
+                        [<rowN strings>]
+                    ]
                 ]
-            ]
         """
         
         error = []
         header = []
         decisions = []
 
-        if not tableString.split():
+        if tableString.split() == []:
             error.append('Table variable is empty!')
-        
-        tableString = tableString.split('\n')
-        newData = []
-        for element in tableString:
-            if element.strip():
-                newData.append(element)
-        
-        for element in newData[0].split():
-            if not element in header:
-                header.append(element)
-            else:
-                error.append('Header element: '+element+' is not unique!')
-
-        for i, tableString in enumerate(newData[2:]):
-            split = tableString.split()
-            if len(split) == len(header):
-                decisions.append(split)
-            else:
-                error.append('Row: {}==> missing: {} data'.format(
-                    str(i).ljust(4),
-                    str(len(header)-len(split)).ljust(2))
-                )
+        else:
+            tableString = tableString.split('\n')
+            newData = []
+            for element in tableString:
+                if element.strip():
+                    newData.append(element)
+            
+            for element in newData[0].split():
+                if not element in header:
+                    header.append(element)
+                else:
+                    error.append('Header element: '+element+' is not unique!')
+    
+            for i, tableString in enumerate(newData[2:]):
+                split = tableString.split()
+                if len(split) == len(header):
+                    decisions.append(split)
+                else:
+                    error.append('Row: {}==> missing: {} data'.format(
+                        str(i).ljust(4),
+                        str(len(header)-len(split)).ljust(2))
+                    )
         
         if error:
-            view.Tli.showErrors(error)
+            view.Tli.showErrors('TableStringError',error)
         else:
             return [header,decisions]
             
@@ -151,7 +155,7 @@ class DecisionTable(object):
                         decisions[row][i]=decisions[row-1][i]
         
         if error:
-            view.Tli.showErrors(error)
+            view.Tli.showErrors('ReplaceSpecialValuesError',error)
         else:
             return decisions
 
@@ -248,7 +252,7 @@ class DecisionTable(object):
         
         errors = self.__checkDecisionParameters(result,**values)
         if errors:
-            view.Tli.showErrors('Parameters error', errors)
+            view.Tli.showErrors('ParametersError', errors)
 
         machingData = {}
         for line in self.decisions:
@@ -301,7 +305,12 @@ class DecisionTable(object):
             >>>     value1 value2
             >>> ''')
             >>>
-            >>> table.decisionCall(call,['header1','header2'],header1='value1',header2='value2')
+            >>> header1, header2 = table.decision(
+            >>>     call,
+            >>>     ['header1','header2'],
+            >>>     header1='value1',
+            >>>     header2='value2'
+            >>> )
             (value1 value2)
         """
         callback(**self.__getDecision(result,**values))
@@ -327,7 +336,11 @@ class DecisionTable(object):
             >>>     value1 value2
             >>> ''')
             >>>
-            >>> header1, header2 = table.decision(['header1','header2'],header1='value1',header2='value2')
+            >>> header1, header2 = table.decision(
+            >>>     ['header1','header2'],
+            >>>     header1='value1',
+            >>>     header2='value2'
+            >>> )
             >>> print(header1,header2)
             (value1 value2)
 

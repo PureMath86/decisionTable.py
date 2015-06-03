@@ -23,9 +23,6 @@ decisionTable
 
 .. image:: https://readthedocs.org/projects/decisiontable/badge/
  		:target: https://readthedocs.org/projects/decisiontable
-
-.. image:: https://crate.io/packages/decisionTable
-		:rarget: https://crate.io/packages/decisionTable
 		
 * Free software: BSD license
 * Documentation: https://decisionTable.readthedocs.org.

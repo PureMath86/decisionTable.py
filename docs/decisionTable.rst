@@ -1,6 +1,13 @@
 decisionTable package
 =====================
 
+Subpackages
+-----------
+
+.. toctree::
+
+    decisionTable.view
+
 Submodules
 ----------
 

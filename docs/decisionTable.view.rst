@@ -4,10 +4,10 @@ decisionTable.view package
 Submodules
 ----------
 
-decisionTable.view.TLI module
+decisionTable.view.Tli module
 -----------------------------
 
-.. automodule:: decisionTable.view.TLI
+.. automodule:: decisionTable.view.Tli
     :members:
     :undoc-members:
     :show-inheritance:
