@@ -183,7 +183,7 @@ class no_decisions(unittest.TestCase):
     def tearDown(self):
         pass
 
-class catchedErrors(unittest.TestCase):
+class errors(unittest.TestCase):
 
     def setUp(self):
         self.instance = decisionTable.DecisionTable("test")
