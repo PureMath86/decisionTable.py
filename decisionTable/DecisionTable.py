@@ -190,10 +190,11 @@ class DecisionTable(object):
             }
 
         """
+
         machingIndexes = {}
         for index, name in enumerate(self.header):
             if name in values:
-                machingIndexes[values[name]] = index
+                machingIndexes[index] = values[name]
         return machingIndexes
     
     def __checkDecisionParameters(self,result,**values):
@@ -246,7 +247,7 @@ class DecisionTable(object):
         
         Returns: Maped result values with finded elements in row/row.
         """
-        
+    
         values = self.__toString(values)
         __valueKeyWithHeaderIndex = self.__valueKeyWithHeaderIndex(values)
         
@@ -257,11 +258,11 @@ class DecisionTable(object):
         machingData = {}
         for line in self.decisions:
 
-            match = True 
-
-            for valueKey in __valueKeyWithHeaderIndex:
-                if line[__valueKeyWithHeaderIndex[valueKey]] != valueKey:
-                    if line[__valueKeyWithHeaderIndex[valueKey]] != self.__wildcardSymbol:
+            match = True
+            
+            for index in __valueKeyWithHeaderIndex:
+                if line[index] != __valueKeyWithHeaderIndex[index]:
+                    if line[index] != self.__wildcardSymbol:
                         match = False
                         break
             
@@ -366,3 +367,5 @@ class DecisionTable(object):
             return data[0]
         else:
             return data
+
+ 
