@@ -247,6 +247,7 @@ class DecisionTable(object):
         Returns: Maped result values with finded elements in row/row.
         """
         
+        values = self.__toString(values)
         __valueKeyWithHeaderIndex = self.__valueKeyWithHeaderIndex(values)
         
         errors = self.__checkDecisionParameters(result,**values)
@@ -312,7 +313,6 @@ class DecisionTable(object):
             >>> )
             (value1 value2)
         """
-        values = self.__toString(values)
         callback(**self.__getDecision(result,**values))
     
     def decision(self,result,**values):
@@ -345,7 +345,6 @@ class DecisionTable(object):
             (value1 value2)
 
         """
-        values = self.__toString(values)
         data = self.__getDecision(result,**values)
         data = [ data[value] for value in result]
         if len(data) == 1:
@@ -361,7 +360,6 @@ class DecisionTable(object):
             Arrays of arrays of finded elements or if finds only one mach, array of strings.
 
         """
-        values = self.__toString(values)
         data = self.__getDecision(result,multiple=True,**values)
         data = [ data[value] for value in result]
         if len(data) == 1:
