@@ -121,6 +121,51 @@ class normal(unittest.TestCase):
     def tearDown(self):
         pass
 
+class special(unittest.TestCase):
+    def setUp(self):
+        self.instance = decisionTable.DecisionTable("""
+            packageState     configState    execute        err_package    err_config    new_packageState    new_configState
+            ===============================================================================================================
+            ok               purge          purgeConfig    None           True          ok                  error
+            None             purge          purgeConfig    None           True          None                error
+        """)
+        
+    def test_instance_method__decisionCall(self):
+        this = self
+        
+        def callback(new_packageState,new_configState):
+            this.assertEqual(new_packageState,'None')
+            this.assertEqual(new_configState,'error')
+    
+        self.instance.decisionCall(callback,
+            ['new_packageState','new_configState'],
+            packageState = None,
+            configState = 'purge'
+        )
+    
+    def test_instance_method__decision(self):
+        result = self.instance.decision(
+            ['new_packageState','new_configState'],
+            packageState = None,
+            configState = 'purge'
+        )
+        
+        self.assertTrue(result)
+        self.assertEqual(result,['None','error'])
+    
+    def test_instance_method__allDecision(self):
+        result = self.instance.allDecisions(
+            ['new_packageState','new_configState'],
+            packageState = None,
+            configState = 'purge'
+        )
+        
+        self.assertTrue(result)
+        self.assertEqual(result,[['None'], ['error']])
+                
+    def tearDown(self):
+        pass
+    
 class no_decisions(unittest.TestCase):
 
     def setUp(self):  
