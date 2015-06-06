@@ -32,3 +32,8 @@ Features
 
 - Decision table string parser.
 - Get decision from table.
+
+Todo
+----
+
+- Add unittest for error msg form (like for mylinux)
