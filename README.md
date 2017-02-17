@@ -1,4 +1,4 @@
-![Project logo](https://github.com/urosjarc/decisionTable.py/blob/master/docs/media/header.png?raw=true)
+![Project logo](https://github.com/urosjarc/decisionTable.py/blob/master/docs/media/logo.png?raw=true)
 
 <br>
 
