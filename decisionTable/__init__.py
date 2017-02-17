@@ -1,15 +1,10 @@
 # -*- coding: utf-8 -*-
+
 """
-decisionTable
-------------
-Main package for decisionTable.
+Testing pdoc
 """
 
-from __future__ import absolute_import
-
-__author__ = u'Uroš Jarc'
-__email__ = u'jar.fmf@gmail.com'
-__version__ = u'0.0.3'
-__description__ = u'Transform decision table string to code logic.'
-
-from .DecisionTable import DecisionTable
+__author__ = """Uroš Jarc"""
+__email__ = 'jar.fmf@gmail.com'
+__version__ = '0.0.1'
+__description__ = 'Remove multiple if/elif/else statements with decision table!'
