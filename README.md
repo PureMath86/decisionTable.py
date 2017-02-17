@@ -17,9 +17,9 @@
 [pip-url]: https://pypi.python.org/pypi/decisionTable
 [travis]: https://img.shields.io/travis/urosjarc/decisionTable.py.svg
 [travis-url]: https://travis-ci.org/urosjarc/decisionTable.py
-[coverage]: https://img.shields.io/codacy/coverage/71b26bbc68de46ed9b6ad037d821b635.svg
+[coverage]: https://img.shields.io/codacy/coverage/caf368912b864fbcb630a10eb84bf2c4.svg
 [coverage-url]: https://www.codacy.com/app/urosjarc/decisionTable.py
-[codestyle]: https://img.shields.io/codacy/grade/71b26bbc68de46ed9b6ad037d821b635.svg
+[codestyle]: https://img.shields.io/codacy/grade/caf368912b864fbcb630a10eb84bf2c4.svg
 [codestyle-url]: https://www.codacy.com/app/urosjarc/decisionTable.py
 [chat]: https://badges.gitter.im/Join%20Chat.svg
 [chat-url]: https://gitter.im/urosjarc/decisionTable.py?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge
