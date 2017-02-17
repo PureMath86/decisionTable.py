@@ -13,7 +13,7 @@
 [![Patreon User][support]][support-url]
 [![Twitter User][twitter]][twitter-url]
 
-[pip]: https://img.shields.io/pip/v/decisionTable.py.svg
+[pip]: https://img.shields.io/pypi/v/decisionTable.svg
 [pip-url]: https://pypi.python.org/pypi/decisionTable
 [travis]: https://img.shields.io/travis/urosjarc/decisionTable.py.svg
 [travis-url]: https://travis-ci.org/urosjarc/decisionTable.py
@@ -33,11 +33,11 @@
 ## Description
 
 **DT.py** (decisionTable.py) was created to simplify python code which
-holds huge amount of logic (if/elif/else). It's pure python package.
-To make decision base on decision table you create simple CSV like
-table, define input/output arguments, define output base on input argument
-combination and this is it. For input arguments you can use simple string,
-**regex**, or **glob like string**! To get a decision pass random input arguments
+holds huge amount of logic (if/elif/else). To make decision base on
+decision table you create simple CSV like table, define input/output
+arguments, define output base on input argument combination and this is
+it. For input arguments you can use simple string, **regex**, or
+**glob like string**! To get a decision pass random input arguments
 in table object and it will return output elements in tuple.
 
 <br>
