@@ -9,21 +9,6 @@ class Error(Exception):
 		return self.msg
 
 
-class ConfigError(Error):
-	"""Config related errors."""
+class TableError(Error):
+	"""Table related errors."""
 	pass
-
-
-class RuntimeError(Error):
-	"""Generic runtime errors."""
-	pass
-
-
-class ArgumentError(Error):
-	"""Argument related errors."""
-	pass
-
-
-class PathTraversalException(Error):
-	pass
-
