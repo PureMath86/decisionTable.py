@@ -9,9 +9,15 @@ Valid elements objects, string, regex, glob, templating with format, function, e
 ['in1<self', 'in1<0', '3']
 '''
 
-class parent(object):
-	def __str__(self):
-		return '<parent>'
+# Initialize this fields in decisionTable.__init__.py
+class Fields(object):
+	class parent(object):
+		def __str__(self):
+			return "<parent>"
+
+	class error(object):
+		def __str__(self):
+			return "<error>"
 
 class DecisionTable(object):
 
@@ -40,11 +46,14 @@ class DecisionTable(object):
 		return tabulate(records, headers=['Index'] + list(self.fields), tablefmt='grid')
 
 if __name__ == '__main__':
+	parent = Fields.parent()
+	error = Fields.error()
+
 	table = DecisionTable(
 		('packageState', 'configState', 'config', 'action', 'new_packageState', 'new_configState'),
 		('None', 'None', 'False', 'install', 'install', 'install'),
 		('ok', 'ok', 'False', 'purge', 'purge', 'purge'),
-		(parent(), parent(), 'True', 'purge', 'ok', 'purge'),
+		(parent, parent, 'True', 'purge', 'ok', 'purge'),
 		('.', '.', 'True', 'update', 'ok', 'update'),
 		('ok', 'error', 'False', 'purge', 'purge', 'purge'),
 		('.', '.', 'True', 'ok', 'ok', 'update'),
@@ -56,7 +65,7 @@ if __name__ == '__main__':
 		('error', 'purge', 'False', 'purge', 'purge', 'purge'),
 		('ok', 'None', 'True', 'install', 'ok', 'install'),
 		('.', '.', 'False', 'purge', 'purge', 'None'),
-		('*', '*', '*', '*', 'ERROR', 'ERROR')
+		('*', '*', '*', '*', error, error)
 	)
 	table.test()
 	print(table)
