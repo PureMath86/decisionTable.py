@@ -12,3 +12,11 @@ class Error(Exception):
 class TableError(Error):
 	"""Table related errors."""
 	pass
+
+class FieldError(TableError):
+	"""Field related errors."""
+	pass
+
+class RecordError(TableError):
+	"""Record related errors."""
+	pass
